@@ -6,15 +6,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Directory implements FileSystemElement {
+
+    protected FileSystemElement parent;
     private File file;
     protected final List<FileSystemElement> elements = new ArrayList<>();
 
     public Directory() {
-
-    }
-
-    public Directory(List<FileSystemElement> subDirectories) {
-        this.elements.addAll(subDirectories);
     }
 
     public void setPath(String path) {
@@ -26,7 +23,7 @@ public class Directory implements FileSystemElement {
                 .map(filePath -> this.file.getPath() + "/" + filePath)
                 .map(File::new)
                 .filter(File::isDirectory)
-                .map(f -> createChildDirectory(f.getPath()))
+                .map(f -> createChildDirectory(f.getName()))
                 .toList();
         elements.addAll(subDirectories);
 
@@ -34,7 +31,7 @@ public class Directory implements FileSystemElement {
                 .map(filePath -> this.file.getPath() + "/" + filePath)
                 .map(File::new)
                 .filter(f -> !f.isDirectory())
-                .map(f -> createFile(f.getPath()))
+                .map(f -> createFile(f.getName()))
                 .toList();
         elements.addAll(files);
     }
@@ -51,17 +48,19 @@ public class Directory implements FileSystemElement {
 
     public Directory createChildDirectory(String name) {
         Directory directory = new Directory();
+        directory.setParent(this);
         directory.setPath(file.getPath() + "/" + name);
-        this.elements.add(directory);
         return directory;
+    }
+
+    private void setParent(Directory directory) {
+        this.parent = directory;
     }
 
     public FileAdapter createFile(String fileName) {
         FileAdapter fileAdapter = new FileAdapter();
-
+        fileAdapter.setParent(this);
         fileAdapter.setPath(file.getPath() + "/" + fileName);
-        this.elements.add(fileAdapter);
-
         return fileAdapter;
     }
 }

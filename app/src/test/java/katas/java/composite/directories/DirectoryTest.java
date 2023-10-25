@@ -4,11 +4,27 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.List;
+import java.io.File;
+
 
 import static org.mockito.Mockito.*;
 
 public class DirectoryTest {
+
+    public String loadResourceTestDirectory(String directoryName) {
+        String path = "src/test/resources/input/" + directoryName;
+
+        File file = new File(path);
+        if (!file.exists()) {
+            Assertions.fail();
+        }
+        return file.getAbsolutePath();
+    }
+
+    @Test
+    public void myTest() {
+        loadResourceTestDirectory("test");
+    }
 
     @Test
     public void inexistantDirectory() {
@@ -20,7 +36,10 @@ public class DirectoryTest {
     @Test
     public void createDirectoryWithTwoSubDirectories() {
         Directory directoryMock = Mockito.spy(new Directory());
-        directoryMock.setPath("/home/matthieu/dev/sandbox/directory");
+
+        String directoryOne = loadResourceTestDirectory("directoryOne");
+        directoryMock.setPath(directoryOne);
+
         verify(directoryMock, times(1)).createChildDirectory("folderOne");
         verify(directoryMock, times(1)).createChildDirectory("folderTwo");
     }
@@ -28,15 +47,19 @@ public class DirectoryTest {
     @Test
     public void createDirectoriesWithOneSubDirectoryAndOneFile() {
         Directory directoryMock = Mockito.spy(new Directory());
-        directoryMock.setPath("/home/matthieu/dev/sandbox/directoryTwo");
+
+        String directoryTwo = loadResourceTestDirectory("directoryTwo");
+        directoryMock.setPath(directoryTwo);
+
         verify(directoryMock, times(1)).createChildDirectory("subfolder");
-        verify(directoryMock, times(1)).createFile("file.txt");
+        // TODO : how to spy the subfolder Directory object?
     }
 
     @Test
-    public void oneByteFile() {
+    public void twoBytesFile() {
         Directory directoryMock = Mockito.spy(new Directory());
-        directoryMock.setPath("/home/matthieu/dev/sandbox/directoryTwo");
-        Assertions.assertEquals(1, directoryMock.getSize());
+        String directoryTwo = loadResourceTestDirectory("directoryTwo");
+        directoryMock.setPath(directoryTwo);
+        Assertions.assertEquals(2, directoryMock.getSize());
     }
 }

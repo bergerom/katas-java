@@ -4,9 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class FileAdapter implements FileSystemElement{
+public class FileAdapter implements FileSystemElement {
     private Long size;
     private File file;
+    protected Directory parent;
 
     public FileAdapter() {
 
@@ -23,5 +24,9 @@ public class FileAdapter implements FileSystemElement{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setParent(Directory directory) {
+        this.parent = directory;
     }
 }
