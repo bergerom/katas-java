@@ -65,6 +65,9 @@ public class ListIntersectionTest {
         builder.addNode(2);
         builder.addNode(9);
         builder.addNode(sharedNode);
+        builder.addNode(1);
+        builder.addNode(1);
+        builder.addNode(1);
         Node listTwo = builder.getLinkedList();
 
         ListIntersectionWithHashMap listIntersectionWithHashMap = new ListIntersectionWithHashMap();
@@ -85,6 +88,38 @@ public class ListIntersectionTest {
 
         builder.clear();
         builder.addNode(sharedNode);
+        builder.addNode(1);
+        builder.addNode(1);
+        builder.addNode(1);
+        Node listTwo = builder.getLinkedList();
+
+        ListIntersectionWithHashMap listIntersectionWithHashMap = new ListIntersectionWithHashMap();
+        ListIntersectionTraversal ListIntersectionTraversal = new ListIntersectionTraversal();
+        Assertions.assertEquals(sharedNode, listIntersectionWithHashMap.getIntersection(listOne, listTwo));
+        Assertions.assertEquals(sharedNode, ListIntersectionTraversal.getIntersection(listOne, listTwo));
+    }
+
+    @Test
+    public void testListIntersectionSecondListBigger() {
+        Node sharedNode = new Node(6);
+
+        LinkedListBuilder builder = new LinkedListBuilder();
+        builder.addNode(1);
+        builder.addNode(sharedNode);
+        builder.addNode(2);
+
+        Node listOne = builder.getLinkedList();
+
+        builder.clear();
+        builder.addNode(5);
+        builder.addNode(9);
+        builder.addNode(11);
+        builder.addNode(7);
+        builder.addNode(sharedNode);
+        builder.addNode(1);
+        builder.addNode(1);
+        builder.addNode(1);
+        builder.addNode(1);
         Node listTwo = builder.getLinkedList();
 
         ListIntersectionWithHashMap listIntersectionWithHashMap = new ListIntersectionWithHashMap();

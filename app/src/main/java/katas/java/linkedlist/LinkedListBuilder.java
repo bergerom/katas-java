@@ -18,7 +18,6 @@ public class LinkedListBuilder {
     }
 
     public LinkedListBuilder addNode(Node node) {
-        node.next = null;
         if (first == null) {
             first = node;
         } else {

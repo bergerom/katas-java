@@ -24,4 +24,14 @@ public class Node {
         }
         n.next = end;
     }
+
+    public Node getLastElement() {
+        Node n = this;
+        while (n.next != null) {
+            n = n.next;
+        }
+        return n;
+    }
+
+
 }
