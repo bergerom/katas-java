@@ -13,3 +13,9 @@ Implement an application that can compute (yes, you really have to compute)
 the size of a directory. 
 The size of a directory is equal to the sum of all the files it contains plus the 
 size of its subdirectories. (Hint: you might want to wrap java.io.File objects inside your Leaf and Composite classes. 
+
+## Linked List
+Given two (singly) linked lists, determine if the two lists intersect. Return the
+intersecting node. Note that the intersection is defined based on reference, not value. That is, if the
+kth node of the first linked list is the exact same node (by reference) as the jth node of the second
+linked list, then they are intersecting
