@@ -24,7 +24,7 @@ public class Cell {
     }
 
     public Boolean isABomb() {
-        return CellType.EMPTY.equals(cellType);
+        return CellType.BOMB.equals(cellType);
     }
 
 

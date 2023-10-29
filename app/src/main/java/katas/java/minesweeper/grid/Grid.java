@@ -7,6 +7,9 @@ import katas.java.minesweeper.InvalidStateException;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
+
+import static katas.java.minesweeper.grid.CellType.getAllowedCharactersForCell;
 
 public class Grid implements IOGridDisplay {
     protected InternalGrid cells; // TODO : make an internal grid class with getCellAt, getPositionFromCell
@@ -18,11 +21,11 @@ public class Grid implements IOGridDisplay {
     public Grid() {
     }
 
-    public static Grid createGrid(Integer nbCells) throws InvalidStateException {
+    public static Grid createGrid(Integer nbCells) throws InvalidInputException {
         return createGrid(nbCells, null);
     }
 
-    public static Grid createGrid(Integer nbCells, List<Position> bombCells) throws InvalidStateException {
+    public static Grid createGrid(Integer nbCells, List<Position> bombCells) throws InvalidInputException {
         Builder builder = new Builder();
         builder.setGridSize(nbCells);
         if (bombCells != null) {
@@ -30,6 +33,13 @@ public class Grid implements IOGridDisplay {
         }
         builder.initializeCellValues();
         return builder.build();
+    }
+
+    public static Grid createGrid(String gridInput) throws InvalidInputException {
+        return new Builder()
+                .initFromAsciiGrid(gridInput)
+                .initializeCellValues()
+                .build();
     }
 
     // TODO : refactor into InternalGrid class with proper tests !
@@ -85,15 +95,15 @@ public class Grid implements IOGridDisplay {
             grid = new Grid();
         }
 
-        Builder setGridSize(int nbCells) throws InvalidStateException {
-            if (squareRootIsWhole(nbCells)) {
-                throw new InvalidStateException();
+        Builder setGridSize(int nbCells) throws InvalidInputException {
+            if (squareRootIsNotWhole(nbCells)) {
+                throw new InvalidInputException("Grid must be square.");
             }
             grid.cells = new InternalGrid(nbCells);
             return this;
         }
 
-        private static boolean squareRootIsWhole(int number) {
+        private static boolean squareRootIsNotWhole(int number) {
             return Math.ceil(Math.sqrt(number)) != Math.sqrt(number);
         }
 
@@ -116,16 +126,14 @@ public class Grid implements IOGridDisplay {
         }
 
         Builder initFromAsciiGrid(String gridInput) throws InvalidInputException {
-            // TODO : verify allowed characters for grid first
+            verifyCharacters(gridInput);
+
             List<String> lines = Arrays
                     .stream(gridInput.split("\n")).toList();
-            int nbLines = lines.size();
-            if (nbLines < 2) {
-                throw new InvalidInputException();
-            }
 
-            int lineLength = lines.get(0).length();
-            allLinesHaveSameLength(lines, lineLength);
+            int nbLines = getNbLines(lines);
+
+            allLinesHaveSameLength(lines);
 
             List<CellType> lineCells = lines
                     .subList(1, nbLines)
@@ -138,6 +146,9 @@ public class Grid implements IOGridDisplay {
                     .toList();
 
             int nbCellsGridInput = lineCells.size();
+            if (squareRootIsNotWhole(nbCellsGridInput)) {
+                throw new InvalidInputException("Grid must be square.");
+            }
             grid.cells = new InternalGrid(nbCellsGridInput);
 
             for (int index = 0; index < nbCellsGridInput; index++) {
@@ -156,9 +167,25 @@ public class Grid implements IOGridDisplay {
             return this;
         }
 
-        private static void allLinesHaveSameLength(List<String> lines, int lineLength) throws InvalidInputException {
+        private static int getNbLines(List<String> lines) throws InvalidInputException {
+            int nbLines = lines.size();
+            if (nbLines < 2) {
+                throw new InvalidInputException("Number of lines should be > 2.");
+            }
+            return nbLines;
+        }
+
+        private void verifyCharacters(String gridInput) throws InvalidInputException {
+            List<String> allowedChars = getAllowedCharactersForCell();
+            if (Stream.of(gridInput).anyMatch(allowedChars::contains)) {
+                throw new InvalidInputException("Invalid characted detected in grid input.");
+            }
+        }
+
+        private static void allLinesHaveSameLength(List<String> lines) throws InvalidInputException {
+            int lineLength = lines.get(0).length();
             if (lines.stream().anyMatch(l -> l.length() != lineLength))
-                throw new InvalidInputException();
+                throw new InvalidInputException("Invalid input format. All lines should have the same length.");
         }
 
 

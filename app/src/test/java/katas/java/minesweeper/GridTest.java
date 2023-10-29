@@ -2,6 +2,7 @@ package katas.java.minesweeper;
 
 import katas.java.minesweeper.grid.Cell;
 import katas.java.minesweeper.grid.Grid;
+import katas.java.minesweeper.grid.GridResources;
 import katas.java.minesweeper.grid.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ public class GridTest {
     public void gridMustBeSquare() {
         try {
             Grid squareGrid = createGrid(25, new ArrayList<>());
-        } catch (InvalidStateException e) {
+        } catch (InvalidInputException e) {
             // Should not arrive here
             throw new RuntimeException(e);
         }
@@ -27,7 +28,7 @@ public class GridTest {
     }
 
     @Test
-    public void getCellAtTest() throws InvalidStateException, CellOutOfBoundException {
+    public void getCellAtTest() throws CellOutOfBoundException, InvalidInputException {
         Grid grid = createGrid(25, new ArrayList<>());
         Cell cell_0_0 = grid.getCellAt(new Position(0, 0));
         Assertions.assertEquals(0, cell_0_0.col);
@@ -50,5 +51,23 @@ public class GridTest {
             Cell cell_out_of_bound = grid.getCellAt(new Position(6, 6));
         });
 
+    }
+
+    @Test
+    public void gridContainsOnlyAllowedCharacters() {
+
+        Assertions.assertThrows(InvalidInputException.class, () -> {
+            createGrid(GridResources.invalidCharacterGrid().replaceAll("[0-9]", "o"));
+        });
+    }
+
+    @Test
+    public void initComplexGameGridTest() throws CellOutOfBoundException, InvalidInputException {
+
+        String gridAfterInit = GridResources.complexGridOne();
+        String gridBeforeInit = gridAfterInit.replaceAll("[0-9]", "o");
+        Grid grid = createGrid(gridBeforeInit);
+
+        Assertions.assertEquals(gridAfterInit, grid.displayGameGrid());
     }
 }
