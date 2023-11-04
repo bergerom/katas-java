@@ -58,7 +58,18 @@ public class InternalGrid {
         return adjacentCells;
     }
 
-    protected List<Cell> getBombCells() {
-        return cells.stream().filter(c -> c.isABomb()).toList();
+    protected Optional<Cell> getAdjacentCell(Cell cell, MoveDirection moveDirection) {
+        return switch (moveDirection) {
+            case LEFT -> getCellAt(new Position(cell.row, cell.col - 1));
+            case RIGHT -> getCellAt(new Position(cell.row, cell.col + 1));
+            case DOWN -> getCellAt(new Position(cell.row + 1, cell.col));
+            case UP -> getCellAt(new Position(cell.row - 1, cell.col));
+        };
     }
+
+    protected List<Cell> getBombCells() {
+        return cells.stream().filter(Cell::isABomb).toList();
+    }
+
+
 }

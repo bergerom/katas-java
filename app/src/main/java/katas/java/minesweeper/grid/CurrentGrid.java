@@ -48,7 +48,7 @@ public class CurrentGrid {
 
         for (MoveDirection moveDirection : MoveDirection.values()) {
             System.out.println(" ---> " + moveDirection.name());
-            grid.getAdjacentCell(cellToCheck, moveDirection)
+            grid.cells.getAdjacentCell(cellToCheck, moveDirection)
                     .ifPresent(cell -> {
                         if (!revealed.contains(cell)) {
                             revealNewCells(cell, revealed, grid);
