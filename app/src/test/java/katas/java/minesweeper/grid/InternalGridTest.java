@@ -1,9 +1,5 @@
-package katas.java.minesweeper;
+package katas.java.minesweeper.grid;
 
-import katas.java.minesweeper.grid.Cell;
-import katas.java.minesweeper.grid.InternalGrid;
-
-import katas.java.minesweeper.grid.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class InternalGridTest {
-    public class MockInternalGrid extends InternalGrid {
+    public static class MockInternalGrid extends InternalGrid {
         public MockInternalGrid(int nbCells) {
             super(nbCells);
         }

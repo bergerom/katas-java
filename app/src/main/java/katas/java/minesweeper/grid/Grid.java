@@ -3,10 +3,10 @@ package katas.java.minesweeper.grid;
 import katas.java.minesweeper.CellOutOfBoundException;
 import katas.java.minesweeper.IOGridDisplay;
 import katas.java.minesweeper.InvalidInputException;
-import katas.java.minesweeper.InvalidStateException;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static katas.java.minesweeper.grid.CellType.getAllowedCharactersForCell;
@@ -52,6 +52,15 @@ public class Grid implements IOGridDisplay {
                 });
     }
 
+    public Optional<Cell> getAdjacentCell(Cell cell, MoveDirection moveDirection) {
+        return switch (moveDirection) {
+            case LEFT -> cells.getCellAt(new Position(cell.row, cell.col - 1));
+            case RIGHT -> cells.getCellAt(new Position(cell.row, cell.col + 1));
+            case DOWN -> cells.getCellAt(new Position(cell.row + 1, cell.col));
+            case UP -> cells.getCellAt(new Position(cell.row - 1, cell.col));
+        };
+    }
+
     @Override
     public String displayGameGrid() throws CellOutOfBoundException {
         StringBuilder result = new StringBuilder();
@@ -89,7 +98,7 @@ public class Grid implements IOGridDisplay {
 
     static class Builder {
 
-        private Grid grid;
+        private final Grid grid;
 
         public Builder() {
             grid = new Grid();

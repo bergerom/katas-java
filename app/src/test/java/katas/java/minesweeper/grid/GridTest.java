@@ -1,9 +1,7 @@
-package katas.java.minesweeper;
+package katas.java.minesweeper.grid;
 
-import katas.java.minesweeper.grid.Cell;
-import katas.java.minesweeper.grid.Grid;
-import katas.java.minesweeper.grid.GridResources;
-import katas.java.minesweeper.grid.Position;
+import katas.java.minesweeper.CellOutOfBoundException;
+import katas.java.minesweeper.InvalidInputException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -16,13 +14,13 @@ public class GridTest {
     @Test
     public void gridMustBeSquare() {
         try {
-            Grid squareGrid = createGrid(25, new ArrayList<>());
+            createGrid(25, new ArrayList<>());
         } catch (InvalidInputException e) {
             // Should not arrive here
             throw new RuntimeException(e);
         }
 
-        Assertions.assertThrows(InvalidStateException.class, () -> {
+        Assertions.assertThrows(InvalidInputException.class, () -> {
             createGrid(54, new ArrayList<>());
         });
     }
@@ -64,10 +62,8 @@ public class GridTest {
     @Test
     public void initComplexGameGridTest() throws CellOutOfBoundException, InvalidInputException {
 
-        String gridAfterInit = GridResources.complexGridOne();
-        String gridBeforeInit = gridAfterInit.replaceAll("[0-9]", "o");
-        Grid grid = createGrid(gridBeforeInit);
+        Grid grid = createGrid(GridResources.complexGridOneHidden());
 
-        Assertions.assertEquals(gridAfterInit, grid.displayGameGrid());
+        Assertions.assertEquals(GridResources.complexGridOneRevealed(), grid.displayGameGrid());
     }
 }
