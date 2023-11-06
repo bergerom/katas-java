@@ -71,5 +71,9 @@ public class InternalGrid {
         return cells.stream().filter(Cell::isABomb).toList();
     }
 
+    protected List<Cell> getAllCells() {
+        return this.cells;
+    }
+
 
 }

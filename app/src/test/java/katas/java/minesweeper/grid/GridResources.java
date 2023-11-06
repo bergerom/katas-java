@@ -10,7 +10,7 @@ public class GridResources {
                 |- -|""";
     }
 
-    public static String complexGridOneRevealed() {
+    public static String complexGridOneWithHints() {
         return """
                 |- - - - -|
                 |1 2 2 1 o|
@@ -21,11 +21,11 @@ public class GridResources {
                 |- - - - -|""";
     }
 
-    public static String complexGridOneHidden() {
-        return complexGridOneRevealed().replaceAll("[0-9]", "o");
+    public static String complexGridOneNoHints() {
+        return complexGridOneWithHints().replaceAll("[0-9]", "o");
     }
 
-    public static String complexGridTwoReavealed() {
+    public static String complexGridTwoWithHints() {
         return """
                 |- - - - -|
                 |o 1 x 1 o|
@@ -36,8 +36,19 @@ public class GridResources {
                 |- - - - -|""";
     }
 
-    public static String complexGridTwoHidden() {
-        return complexGridTwoReavealed().replaceAll("[0-9]", "o");
+    public static String complexGridTwoNoHints() {
+        return complexGridTwoWithHints().replaceAll("[0-9]", "o");
+    }
+
+    public static String complexGridTwoHiddenCells() {
+        return """
+                |- - - - -|
+                |? ? ? 1 o|
+                |? ? ? 1 o|
+                |? ? 1 o o|
+                |1 1 1 o o|
+                |o o o o o|
+                |- - - - -|""";
     }
 
 }

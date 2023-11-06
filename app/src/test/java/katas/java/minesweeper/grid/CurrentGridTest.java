@@ -13,7 +13,7 @@ class CurrentGridTest {
 
     @Test
     void getNewGridStepNoBombNearby() throws InvalidInputException, EndOfGameException, CellOutOfBoundException {
-        Grid grid = Grid.createGrid(GridResources.complexGridOneHidden());
+        Grid grid = Grid.createGrid(GridResources.complexGridOneNoHints());
         CurrentGrid currentGrid = new CurrentGrid();
         CurrentGrid gridAfter = currentGrid.getNewGrid(new Position(0, 4), grid);
         List<Cell> expectedReavealed = List.of(
@@ -28,7 +28,7 @@ class CurrentGridTest {
 
     @Test
     void getNewGridStepNoBombNearbyLuckyStep() throws InvalidInputException, EndOfGameException, CellOutOfBoundException {
-        Grid grid = Grid.createGrid(GridResources.complexGridTwoHidden());
+        Grid grid = Grid.createGrid(GridResources.complexGridTwoNoHints());
         CurrentGrid currentGrid = new CurrentGrid();
         CurrentGrid gridAfter = currentGrid.getNewGrid(new Position(4, 1), grid);
         List<Cell> expectedReavealed = List.of(
@@ -56,7 +56,7 @@ class CurrentGridTest {
 
     @Test
     void getNewGridWithBombNearby() throws EndOfGameException, CellOutOfBoundException, InvalidInputException {
-        Grid grid = Grid.createGrid(GridResources.complexGridOneHidden());
+        Grid grid = Grid.createGrid(GridResources.complexGridOneNoHints());
         CurrentGrid currentGrid = new CurrentGrid();
         CurrentGrid gridAfter = currentGrid.getNewGrid(new Position(4, 3), grid);
         List<Cell> expectedReavealed = List.of(grid.getCellAt(new Position(4, 3)));
@@ -65,7 +65,7 @@ class CurrentGridTest {
 
     @Test
     void getNewGridStepOnBomb() throws InvalidInputException {
-        Grid grid = Grid.createGrid(GridResources.complexGridOneHidden());
+        Grid grid = Grid.createGrid(GridResources.complexGridOneNoHints());
         CurrentGrid currentGrid = new CurrentGrid();
         Assertions.assertThrows(EndOfGameException.class, () -> {
             currentGrid.getNewGrid(new Position(4, 4), grid);

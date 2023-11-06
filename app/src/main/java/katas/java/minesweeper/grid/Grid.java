@@ -4,8 +4,7 @@ import katas.java.minesweeper.CellOutOfBoundException;
 import katas.java.minesweeper.IOGridDisplay;
 import katas.java.minesweeper.InvalidInputException;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static katas.java.minesweeper.grid.CellType.getAllowedCharactersForCell;
@@ -41,6 +40,34 @@ public class Grid implements IOGridDisplay {
                 .build();
     }
 
+    public static Grid createRandomGrid() throws InvalidInputException {
+        Random random = new Random();
+        int rowLength = random.nextInt(3, 10);
+        int nbCells = rowLength * rowLength;
+
+        int nbBombs = random.nextInt(rowLength);
+        Set<Position> bombs = new HashSet<>();
+        while (bombs.size() < nbBombs) {
+            int row = random.nextInt(rowLength);
+            int col = random.nextInt(rowLength);
+            bombs.add(new Position(row, col));
+        }
+
+        return createGrid(nbCells, bombs.stream().toList());
+    }
+
+    public int getNbBombs() {
+        return this.cells.getBombCells().size();
+    }
+
+    public int getNbCells() {
+        return this.cells.getAllCells().size();
+    }
+
+    public int getRowLength() {
+        return this.cells.getRowLength();
+    }
+
     // TODO : refactor into InternalGrid class with proper tests !
     public Cell getCellAt(Position position) throws CellOutOfBoundException {
         return cells.getCellAt(position)
@@ -51,8 +78,17 @@ public class Grid implements IOGridDisplay {
                 });
     }
 
+    public Position getPositionFromIndex(int index) {
+        return cells.getPositionFromIndex(index);
+    }
+
     @Override
     public String displayGameGrid() throws CellOutOfBoundException {
+        return displayGameGrid(cells.getAllCells());
+    }
+
+    @Override
+    public String displayGameGrid(List<Cell> onlyDisplay) throws CellOutOfBoundException {
         StringBuilder result = new StringBuilder();
         int rowLength = this.cells.getRowLength();
         result.append(generateBlankLine(rowLength)).append("\n");
@@ -62,7 +98,7 @@ public class Grid implements IOGridDisplay {
             for (int col = 0; col < rowLength; col++) {
                 int index = row * rowLength + col;
                 Cell cell = getCellAt(cells.getPositionFromIndex(index));
-                result.append(cell.toString());
+                result.append(onlyDisplay.contains(cell) ? cell.toString() : "?");
                 if (col != rowLength - 1) {
                     result.append(" ");
                 }

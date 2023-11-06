@@ -62,8 +62,8 @@ public class GridTest {
     @Test
     public void initComplexGameGridTest() throws CellOutOfBoundException, InvalidInputException {
 
-        Grid grid = createGrid(GridResources.complexGridOneHidden());
+        Grid grid = createGrid(GridResources.complexGridOneNoHints());
 
-        Assertions.assertEquals(GridResources.complexGridOneRevealed(), grid.displayGameGrid());
+        Assertions.assertEquals(GridResources.complexGridOneWithHints(), grid.displayGameGrid());
     }
 }

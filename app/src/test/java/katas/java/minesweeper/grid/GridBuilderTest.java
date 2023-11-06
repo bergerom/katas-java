@@ -23,28 +23,31 @@ class GridBuilderTest {
 
     @Test
     void initializeCellValues() throws InvalidInputException, InvalidStateException, CellOutOfBoundException {
-        String gridInput = " |- - - - - -|\n" +
-                " |o o o o o o|\n" +
-                " |o o o o o o|\n" +
-                " |o o x x o o|\n" +
-                " |o o o o o o|\n" +
-                " |o o o o o x|\n" +
-                " |o o o x o x|\n" +
-                " |- - - - - -|";
+        String gridInput = """
+                 |- - - - - -|
+                 |o o o o o o|
+                 |o o o o o o|
+                 |o o x x o o|
+                 |o o o o o o|
+                 |o o o o o x|
+                 |o o o x o x|
+                 |- - - - - -|\
+                """;
 
         Grid actualGrid = new Grid.Builder()
                 .initFromAsciiGrid(gridInput)
                 .initializeCellValues()
                 .build();
 
-        String expectedGrid = " |- - - - - -|\n" +
-                " |o o o o o o|\n" +
-                " |o 1 2 2 1 o|\n" +
-                " |o 1 x x 1 o|\n" +
-                " |o 1 2 2 2 1|\n" +
-                " |o o 1 1 3 x|\n" +
-                " |o o 1 x 3 x|\n" +
-                " |- - - - - -|";
-        Assertions.assertEquals(expectedGrid, actualGrid.displayGameGrid());
+        String expectedGrid = """
+                 |- - - - - -|
+                 |o o o o o o|
+                 |o 1 2 2 1 o|
+                 |o 1 x x 1 o|
+                 |o 1 2 2 2 1|
+                 |o o 1 1 3 x|
+                 |o o 1 x 3 x|
+                 |- - - - - -|""";
+        Assertions.assertEquals(expectedGrid.trim(), actualGrid.displayGameGrid().trim());
     }
 }
