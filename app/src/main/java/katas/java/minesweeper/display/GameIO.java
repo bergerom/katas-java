@@ -1,23 +1,19 @@
 package katas.java.minesweeper.display;
 
 import katas.java.minesweeper.CellOutOfBoundException;
-import katas.java.minesweeper.grid.CurrentGrid;
+import katas.java.minesweeper.grid.Cell;
 import katas.java.minesweeper.grid.Position;
 
 import java.io.IOException;
+import java.util.Set;
 
 public interface GameIO {
 
-    // InitGridAndDisplay
-    void displayGameGrid(CurrentGrid currentGrid) throws CellOutOfBoundException, IOException;
+    void displayGameGrid(Set<Cell> onlyDisplay) throws CellOutOfBoundException, IOException;
 
-    // Ask for next move
-    Position takeUserInput();
+    Position takeUserInput() throws IOException;
 
-    // Display win message
-    void displayWinMessage();
+    void displayWinMessage() throws IOException;
 
-    // Display loose message
-    void displayLooseMessage();
-
+    void displayLooseMessage(int score) throws IOException;
 }

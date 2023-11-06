@@ -2,14 +2,13 @@ package katas.java.minesweeper.display;
 
 import katas.java.minesweeper.CellOutOfBoundException;
 import katas.java.minesweeper.grid.Cell;
-import katas.java.minesweeper.grid.CurrentGrid;
 import katas.java.minesweeper.grid.Grid;
 import katas.java.minesweeper.grid.Position;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class ConsoleIO implements GameIO {
 
@@ -25,8 +24,7 @@ public class ConsoleIO implements GameIO {
     }
 
     @Override
-    public void displayGameGrid(CurrentGrid currentGrid) throws CellOutOfBoundException, IOException {
-        List<Cell> onlyDisplay = currentGrid.getRevealedCells();
+    public void displayGameGrid(Set<Cell> onlyDisplay) throws CellOutOfBoundException, IOException {
 
         StringBuilder result = new StringBuilder();
         int rowLength = this.grid.getRowLength(); // We assume the grid is square
@@ -64,12 +62,14 @@ public class ConsoleIO implements GameIO {
     }
 
     @Override
-    public Position takeUserInput() {
+    public Position takeUserInput() throws IOException {
         Scanner scanner = new Scanner(this.inputStream);
 
-        System.out.println("Please choose the next cell you want to explore (row, col): ");
+        writeToOutputStream("\nPlease choose the next cell you want to explore (row, col):\n");
         while (!scanner.hasNext("[0-9],[0-9]")) {
-            System.out.println("Wrong input format.");
+            writeToOutputStream("Wrong input format.\n");
+            writeToOutputStream("Please choose the next cell you want to explore (row, col):\n");
+            scanner.nextLine();
         }
 
         String[] positionInput = scanner.next().split(",");
@@ -79,12 +79,23 @@ public class ConsoleIO implements GameIO {
     }
 
     @Override
-    public void displayWinMessage() {
-
+    public void displayWinMessage() throws IOException {
+        writeToOutputStream("Bravo, you win !!\n");
     }
 
     @Override
-    public void displayLooseMessage() {
+    public void displayLooseMessage(int score) throws IOException {
+        String msg = String.format("\nYou stepped on a bomb, end of game. Score : %s\n", score);
+        writeToOutputStream(msg);
+    }
 
+    public void displayIncorrectPositionMessage(Position position) throws IOException {
+        String errMsg = String.format("Position (%s,%s) is outside the grid.\n",
+                position.row(), position.col());
+        writeToOutputStream(errMsg);
+    }
+
+    private void writeToOutputStream(String message) throws IOException {
+        this.outputStream.write(message.getBytes(StandardCharsets.UTF_8));
     }
 }

@@ -45,7 +45,7 @@ public class Grid implements IOGridDisplay {
         int rowLength = random.nextInt(3, 10);
         int nbCells = rowLength * rowLength;
 
-        int nbBombs = random.nextInt(rowLength);
+        int nbBombs = random.nextInt(rowLength, rowLength + (int) Math.sqrt(rowLength));
         Set<Position> bombs = new HashSet<>();
         while (bombs.size() < nbBombs) {
             int row = random.nextInt(rowLength);
@@ -54,6 +54,10 @@ public class Grid implements IOGridDisplay {
         }
 
         return createGrid(nbCells, bombs.stream().toList());
+    }
+
+    public List<Cell> getCells() {
+        return this.cells.getAllCells();
     }
 
     public int getNbBombs() {

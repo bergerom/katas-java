@@ -31,7 +31,7 @@ class ConsoleIOTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         ConsoleIO consoleIO = new ConsoleIO(grid, null, outputStream);
-        consoleIO.displayGameGrid(currentGrid);
+        consoleIO.displayGameGrid(currentGrid.getRevealedCells());
 
         Assertions.assertEquals(expectedDisplay, outputStream.toString());
     }

@@ -7,35 +7,40 @@ import java.util.*;
 
 public class CurrentGrid {
 
-    private final List<Cell> revealed;
+    private final Set<Cell> revealed;
 
     public CurrentGrid() {
-        this.revealed = Collections.emptyList();
+        this.revealed = Collections.emptySet();
     }
 
-    public CurrentGrid(List<Cell> revealed) {
+    public CurrentGrid(Set<Cell> revealed) {
         this.revealed = revealed;
     }
 
     public CurrentGrid getNewGrid(Position clickedOnCell, Grid grid) throws EndOfGameException, CellOutOfBoundException {
         Cell cell = grid.getCellAt(clickedOnCell);
+
+        if (revealed.contains(cell)) {
+            return this;
+        }
+
         if (cell.isABomb()) {
             throw new EndOfGameException("You stepped on a mine. End of game, bro !");
         }
 
-        List<Cell> revealed = revealNewCells(cell, grid);
-
-        return new CurrentGrid(revealed);
+        Set<Cell> nextTurnRevealed = revealNewCells(cell, grid);
+        nextTurnRevealed.addAll(revealed);
+        return new CurrentGrid(nextTurnRevealed);
     }
 
-    private List<Cell> revealNewCells(Cell clickedOnCell, Grid grid) {
-        List<Cell> revealed = new ArrayList<>();
+    private Set<Cell> revealNewCells(Cell clickedOnCell, Grid grid) {
+        Set<Cell> revealed = new HashSet<>();
         revealNewCells(clickedOnCell, revealed, grid);
         return revealed;
     }
 
-    private void revealNewCells(Cell cellToCheck, List<Cell> revealed, Grid grid) {
-        System.out.println(cellToCheck.toString() + "(" + cellToCheck.row + ", " + cellToCheck.col + ")");
+    private void revealNewCells(Cell cellToCheck, Set<Cell> revealed, Grid grid) {
+        //System.out.println(cellToCheck.toString() + "(" + cellToCheck.row + ", " + cellToCheck.col + ")");
         if (cellToCheck.isABomb()) {
             return;
         } else if (cellToCheck.numberBombsAdj > 0) {
@@ -47,7 +52,7 @@ public class CurrentGrid {
 
 
         for (MoveDirection moveDirection : MoveDirection.values()) {
-            System.out.println(" ---> " + moveDirection.name());
+            //System.out.println(" ---> " + moveDirection.name());
             grid.cells.getAdjacentCell(cellToCheck, moveDirection)
                     .ifPresent(cell -> {
                         if (!revealed.contains(cell)) {
@@ -57,7 +62,7 @@ public class CurrentGrid {
         }
     }
 
-    public List<Cell> getRevealedCells() {
+    public Set<Cell> getRevealedCells() {
         return this.revealed;
     }
 }
