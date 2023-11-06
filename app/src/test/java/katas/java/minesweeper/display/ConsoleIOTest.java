@@ -40,7 +40,7 @@ class ConsoleIOTest {
     @Test
     void takeUserInput() throws IOException {
         try (ByteArrayInputStream inputStream = new ByteArrayInputStream("4,4".getBytes(StandardCharsets.UTF_8))) {
-            ConsoleIO consoleIO = new ConsoleIO(new Grid(), inputStream, null);
+            ConsoleIO consoleIO = new ConsoleIO(new Grid(), inputStream, System.out);
             Assertions.assertEquals(new Position(4, 4), consoleIO.takeUserInput());
         }
     }

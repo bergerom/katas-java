@@ -47,11 +47,12 @@ public class Game {
 
     private Position getNextMove(ConsoleIO consoleIO) throws IOException {
         Position position = null;
-        boolean positionWithinBounds = true;
+        boolean positionWithinBounds;
 
         do {
             // Ask for next move
             position = consoleIO.takeUserInput();
+            positionWithinBounds = true;
             try {
                 grid.getCellAt(position);
             } catch (CellOutOfBoundException cob) {

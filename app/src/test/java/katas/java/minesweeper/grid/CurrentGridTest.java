@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Set;
 
 
 class CurrentGridTest {
@@ -16,14 +17,14 @@ class CurrentGridTest {
         Grid grid = Grid.createGrid(GridResources.complexGridOneNoHints());
         CurrentGrid currentGrid = new CurrentGrid();
         CurrentGrid gridAfter = currentGrid.getNewGrid(new Position(0, 4), grid);
-        List<Cell> expectedReavealed = List.of(
+        Set<Cell> expectedReavealed = Set.of(
                 grid.getCellAt(new Position(0, 3)),
                 grid.getCellAt(new Position(0, 4)),
                 grid.getCellAt(new Position(1, 3)),
                 grid.getCellAt(new Position(1, 4)),
                 grid.getCellAt(new Position(2, 4)));
 
-        GridTestUtils.listEquals(expectedReavealed, gridAfter.getRevealedCells());
+        GridTestUtils.collectionsEquals(expectedReavealed, gridAfter.getRevealedCells());
     }
 
     @Test
@@ -51,7 +52,7 @@ class CurrentGridTest {
                 grid.getCellAt(new Position(4, 4))
         );
 
-        GridTestUtils.listEquals(expectedReavealed, gridAfter.getRevealedCells());
+        GridTestUtils.collectionsEquals(expectedReavealed, gridAfter.getRevealedCells());
     }
 
     @Test
@@ -60,7 +61,7 @@ class CurrentGridTest {
         CurrentGrid currentGrid = new CurrentGrid();
         CurrentGrid gridAfter = currentGrid.getNewGrid(new Position(4, 3), grid);
         List<Cell> expectedReavealed = List.of(grid.getCellAt(new Position(4, 3)));
-        GridTestUtils.listEquals(expectedReavealed, gridAfter.getRevealedCells());
+        GridTestUtils.collectionsEquals(expectedReavealed, gridAfter.getRevealedCells());
     }
 
     @Test

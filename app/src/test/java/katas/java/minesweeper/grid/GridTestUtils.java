@@ -2,11 +2,11 @@ package katas.java.minesweeper.grid;
 
 import org.junit.jupiter.api.Assertions;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class GridTestUtils {
-    public static <T> void listEquals(List<T> expectedValues, List<T> actualValues) {
+    public static <T> void collectionsEquals(Collection<T> expectedValues, Collection<T> actualValues) {
         Assertions.assertEquals(expectedValues.size(), actualValues.size());
         for (Object expected : expectedValues) {
             boolean anyMatch = actualValues.stream().anyMatch(actual -> actual.equals(expected));
