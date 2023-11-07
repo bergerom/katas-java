@@ -79,8 +79,8 @@ public class Grid {
                 });
     }
 
-    public Position getPositionFromIndex(int index) {
-        return cells.getPositionFromIndex(index);
+    public Cell getCellFromIndex(int index) throws CellOutOfBoundException {
+        return getCellAt(cells.getPositionFromIndex(index));
     }
 
     static class Builder {

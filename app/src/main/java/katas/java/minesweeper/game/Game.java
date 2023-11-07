@@ -1,6 +1,6 @@
 package katas.java.minesweeper.game;
 
-import katas.java.minesweeper.game.display.ConsoleIO;
+import katas.java.minesweeper.game.display.GameIO;
 import katas.java.minesweeper.game.exceptions.CellOutOfBoundException;
 import katas.java.minesweeper.game.exceptions.EndOfGameException;
 import katas.java.minesweeper.game.grid.CurrentGrid;
@@ -11,54 +11,56 @@ import java.io.IOException;
 import java.util.HashSet;
 
 public class Game {
-    Grid grid; // Immutable starting grid
+    private final Grid grid; // Immutable starting grid
 
-    CurrentGrid gameGrid; // The grid representing the state of the game, one grid is generated each turn
+    private CurrentGrid gameGrid; // The grid representing the state of the game, one grid is generated each turn
 
-    public Game(Grid grid) {
+    private final GameIO gameIO;
+
+    public Game(Grid grid, GameIO gameIO) {
         this.grid = grid;
         this.gameGrid = new CurrentGrid();
+        this.gameIO = gameIO;
     }
 
     public void gameLoop() throws CellOutOfBoundException, IOException {
 
         // InitGridAndDisplay
-        ConsoleIO consoleIO = new ConsoleIO(grid, System.in, System.out);
-        consoleIO.displayGameGrid(gameGrid.getRevealedCells());
+        gameIO.displayGameGrid(gameGrid.getRevealedCells());
 
         // Game loop
         while (gameGrid.getRevealedCells().size() + grid.getNbBombs() != grid.getNbCells()) {
             // Ask for next move
-            Position position = getNextMove(consoleIO);
+            Position position = getNextMove(gameIO);
 
             try {
                 // Apply next move
                 gameGrid = gameGrid.getNewGrid(position, grid);
-                consoleIO.displayGameGrid(gameGrid.getRevealedCells());
+                gameIO.displayGameGrid(gameGrid.getRevealedCells());
             } catch (EndOfGameException e) {
                 // Game lost
-                consoleIO.displayGameGrid(new HashSet<>(grid.getCells()));
-                consoleIO.displayLooseMessage(gameGrid.getRevealedCells().size());
+                gameIO.displayGameGrid(new HashSet<>(grid.getCells()));
+                gameIO.displayLooseMessage(gameGrid.getRevealedCells().size());
                 return;
             }
         }
 
         // Win
-        consoleIO.displayWinMessage();
+        gameIO.displayWinMessage();
     }
 
-    private Position getNextMove(ConsoleIO consoleIO) throws IOException {
+    private Position getNextMove(GameIO gameIO) throws IOException {
         Position position = null;
         boolean positionWithinBounds;
 
         do {
             // Ask for next move
-            position = consoleIO.takeUserInput();
+            position = gameIO.takeUserInput();
             positionWithinBounds = true;
             try {
                 grid.getCellAt(position);
             } catch (CellOutOfBoundException cob) {
-                consoleIO.displayIncorrectPositionMessage(position);
+                gameIO.displayIncorrectPositionMessage(position);
                 positionWithinBounds = false;
             }
         } while (!positionWithinBounds);

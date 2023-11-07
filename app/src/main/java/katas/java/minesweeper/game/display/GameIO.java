@@ -18,4 +18,6 @@ public interface GameIO {
     void displayWinMessage() throws IOException;
 
     void displayLooseMessage(int score) throws IOException;
+
+    void displayIncorrectPositionMessage(Position position) throws IOException;
 }

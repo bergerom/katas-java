@@ -37,7 +37,7 @@ public class ConsoleIO implements GameIO {
             result.append("|");
             for (int col = 0; col < rowLength; col++) {
                 int index = row * rowLength + col;
-                Cell cell = grid.getCellAt(grid.getPositionFromIndex(index));
+                Cell cell = grid.getCellFromIndex(index);
                 result.append(onlyDisplay.contains(cell) ? cell.toString() : "?");
                 if (col != rowLength - 1) {
                     result.append(" ");
@@ -97,7 +97,7 @@ public class ConsoleIO implements GameIO {
         String msg = String.format("\nYou stepped on a bomb, end of game. Score : %s\n", score);
         writeToOutputStream(msg);
     }
-
+    @Override
     public void displayIncorrectPositionMessage(Position position) throws IOException {
         String errMsg = String.format("Position (%s,%s) is outside the grid.\n",
                 position.row(), position.col());
