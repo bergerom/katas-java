@@ -1,14 +1,15 @@
 package katas.java.minesweeper;
 
-import katas.java.minesweeper.grid.CurrentGrid;
-import katas.java.minesweeper.grid.Grid;
-import katas.java.minesweeper.grid.Position;
+import katas.java.minesweeper.game.exceptions.EndOfGameException;
+import katas.java.minesweeper.game.exceptions.InvalidInputException;
+import katas.java.minesweeper.game.grid.CurrentGrid;
+import katas.java.minesweeper.game.grid.Grid;
+import katas.java.minesweeper.game.grid.Position;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static katas.java.minesweeper.grid.Grid.createGrid;
+import static katas.java.minesweeper.game.grid.Grid.createGrid;
 import static org.junit.jupiter.api.Assertions.*;
 
 // TODO : create a game class, this integration test should act on this class,

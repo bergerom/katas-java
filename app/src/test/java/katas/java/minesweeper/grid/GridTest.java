@@ -1,14 +1,17 @@
 package katas.java.minesweeper.grid;
 
-import katas.java.minesweeper.CellOutOfBoundException;
-import katas.java.minesweeper.InvalidInputException;
+import katas.java.minesweeper.game.exceptions.CellOutOfBoundException;
+import katas.java.minesweeper.game.exceptions.InvalidInputException;
+import katas.java.minesweeper.game.grid.Cell;
+import katas.java.minesweeper.game.grid.Grid;
+import katas.java.minesweeper.game.grid.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static katas.java.minesweeper.grid.Grid.createGrid;
+import static katas.java.minesweeper.game.grid.Grid.createGrid;
 
 
 public class GridTest {

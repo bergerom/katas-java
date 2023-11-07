@@ -1,10 +1,13 @@
 package katas.java.minesweeper;
 
-import katas.java.minesweeper.grid.Grid;
+import katas.java.minesweeper.game.exceptions.CellOutOfBoundException;
+import katas.java.minesweeper.game.Game;
+import katas.java.minesweeper.game.exceptions.InvalidInputException;
+import katas.java.minesweeper.game.grid.Grid;
 
 import java.io.IOException;
 
-import static katas.java.minesweeper.grid.Grid.createRandomGrid;
+import static katas.java.minesweeper.game.grid.Grid.createRandomGrid;
 
 public class Minesweeper {
 

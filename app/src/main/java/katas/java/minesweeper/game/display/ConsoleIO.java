@@ -1,9 +1,9 @@
-package katas.java.minesweeper.display;
+package katas.java.minesweeper.game.display;
 
-import katas.java.minesweeper.CellOutOfBoundException;
-import katas.java.minesweeper.grid.Cell;
-import katas.java.minesweeper.grid.Grid;
-import katas.java.minesweeper.grid.Position;
+import katas.java.minesweeper.game.exceptions.CellOutOfBoundException;
+import katas.java.minesweeper.game.grid.Cell;
+import katas.java.minesweeper.game.grid.Grid;
+import katas.java.minesweeper.game.grid.Position;
 
 import java.io.IOException;
 import java.io.InputStream;

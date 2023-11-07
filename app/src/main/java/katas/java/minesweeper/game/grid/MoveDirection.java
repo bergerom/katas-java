@@ -1,4 +1,4 @@
-package katas.java.minesweeper.grid;
+package katas.java.minesweeper.game.grid;
 
 public enum MoveDirection {
     LEFT,

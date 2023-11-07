@@ -1,12 +1,10 @@
-package katas.java.minesweeper.grid;
+package katas.java.minesweeper.game.grid;
 
-import katas.java.minesweeper.CellOutOfBoundException;
-import katas.java.minesweeper.InvalidInputException;
+import katas.java.minesweeper.game.exceptions.CellOutOfBoundException;
+import katas.java.minesweeper.game.exceptions.InvalidInputException;
 
 import java.util.*;
 import java.util.stream.Stream;
-
-import static katas.java.minesweeper.grid.CellType.getAllowedCharactersForCell;
 
 public class Grid {
     protected InternalGrid cells; // TODO : make an internal grid class with getCellAt, getPositionFromCell
@@ -174,7 +172,7 @@ public class Grid {
         }
 
         private void verifyCharacters(String gridInput) throws InvalidInputException {
-            List<String> allowedChars = getAllowedCharactersForCell();
+            List<String> allowedChars = CellType.getAllowedCharactersForCell();
             if (Stream.of(gridInput).anyMatch(allowedChars::contains)) {
                 throw new InvalidInputException("Invalid characted detected in grid input.");
             }

@@ -1,4 +1,4 @@
-package katas.java.minesweeper.grid;
+package katas.java.minesweeper.game.grid;
 
 import java.util.ArrayList;
 import java.util.List;

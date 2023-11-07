@@ -1,7 +1,8 @@
 package katas.java.minesweeper.grid;
 
-import katas.java.minesweeper.CellOutOfBoundException;
-import katas.java.minesweeper.display.ConsoleIO;
+import katas.java.minesweeper.game.exceptions.CellOutOfBoundException;
+import katas.java.minesweeper.game.display.ConsoleIO;
+import katas.java.minesweeper.game.grid.Grid;
 import org.junit.jupiter.api.Assertions;
 
 import java.io.ByteArrayOutputStream;

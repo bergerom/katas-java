@@ -1,6 +1,4 @@
-package katas.java.minesweeper;
-
-import katas.java.minesweeper.grid.Position;
+package katas.java.minesweeper.game.exceptions;
 
 public class CellOutOfBoundException extends Exception{
     public CellOutOfBoundException(String message) {

@@ -1,5 +1,8 @@
 package katas.java.minesweeper.grid;
 
+import katas.java.minesweeper.game.grid.Cell;
+import katas.java.minesweeper.game.grid.InternalGrid;
+import katas.java.minesweeper.game.grid.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

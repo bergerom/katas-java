@@ -1,4 +1,4 @@
-package katas.java.minesweeper;
+package katas.java.minesweeper.game.exceptions;
 
 public class InvalidInputException extends Exception {
     public InvalidInputException(String s) {
