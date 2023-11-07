@@ -5,8 +5,11 @@ import katas.java.minesweeper.grid.Cell;
 import katas.java.minesweeper.grid.Grid;
 import katas.java.minesweeper.grid.Position;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -48,6 +51,12 @@ public class ConsoleIO implements GameIO {
                 .toString();
 
         this.outputStream.write(gameGrid.getBytes(StandardCharsets.UTF_8));
+    }
+
+    @Override
+    public void displayGameGrid() throws CellOutOfBoundException, IOException {
+        HashSet<Cell> allCells = new HashSet<>(this.grid.getCells());
+        displayGameGrid(allCells);
     }
 
     private String generateBlankLine(int length) {

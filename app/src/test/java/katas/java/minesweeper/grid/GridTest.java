@@ -5,6 +5,7 @@ import katas.java.minesweeper.InvalidInputException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static katas.java.minesweeper.grid.Grid.createGrid;
@@ -60,10 +61,10 @@ public class GridTest {
     }
 
     @Test
-    public void initComplexGameGridTest() throws CellOutOfBoundException, InvalidInputException {
+    public void initComplexGameGridTest() throws CellOutOfBoundException, InvalidInputException, IOException {
 
         Grid grid = createGrid(GridResources.complexGridOneNoHints());
 
-        Assertions.assertEquals(GridResources.complexGridOneWithHints(), grid.displayGameGrid());
+        GridTestUtils.verifyGridEquals(grid, GridResources.complexGridOneWithHints());
     }
 }

@@ -3,26 +3,25 @@ package katas.java.minesweeper.grid;
 import katas.java.minesweeper.CellOutOfBoundException;
 import katas.java.minesweeper.InvalidInputException;
 import katas.java.minesweeper.InvalidStateException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static katas.java.minesweeper.grid.Grid.createGrid;
+import java.io.IOException;
 
 class GridBuilderTest {
 
     @Test
-    public void initFromGridTest() throws InvalidInputException, InvalidStateException, CellOutOfBoundException {
-        String gridStr = "|- -|\n|x o|\n|o x|\n|- -|";
+    public void initFromGridTest() throws InvalidInputException, CellOutOfBoundException, IOException {
+        String expectedGrid = "|- -|\n|x o|\n|o x|\n|- -|";
 
-        Grid grid = new Grid.Builder()
-                .initFromAsciiGrid(gridStr)
+        Grid actualGrid = new Grid.Builder()
+                .initFromAsciiGrid(expectedGrid)
                 .build();
 
-        Assertions.assertEquals(gridStr, grid.displayGameGrid());
+        GridTestUtils.verifyGridEquals(actualGrid, expectedGrid);
     }
 
     @Test
-    void initializeCellValues() throws InvalidInputException, InvalidStateException, CellOutOfBoundException {
+    void initializeCellValues() throws InvalidInputException, InvalidStateException, CellOutOfBoundException, IOException {
         String gridInput = """
                  |- - - - - -|
                  |o o o o o o|
@@ -40,14 +39,17 @@ class GridBuilderTest {
                 .build();
 
         String expectedGrid = """
-                 |- - - - - -|
-                 |o o o o o o|
-                 |o 1 2 2 1 o|
-                 |o 1 x x 1 o|
-                 |o 1 2 2 2 1|
-                 |o o 1 1 3 x|
-                 |o o 1 x 3 x|
-                 |- - - - - -|""";
-        Assertions.assertEquals(expectedGrid.trim(), actualGrid.displayGameGrid().trim());
+                |- - - - - -|
+                |o o o o o o|
+                |o 1 2 2 1 o|
+                |o 1 x x 1 o|
+                |o 1 2 2 2 1|
+                |o o 1 1 3 x|
+                |o o 1 x 3 x|
+                |- - - - - -|""";
+
+        GridTestUtils.verifyGridEquals(actualGrid, expectedGrid);
     }
+
+
 }

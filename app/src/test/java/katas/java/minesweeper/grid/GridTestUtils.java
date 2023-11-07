@@ -1,7 +1,11 @@
 package katas.java.minesweeper.grid;
 
+import katas.java.minesweeper.CellOutOfBoundException;
+import katas.java.minesweeper.display.ConsoleIO;
 import org.junit.jupiter.api.Assertions;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -16,6 +20,14 @@ public class GridTestUtils {
                         actualValues.stream().map(o -> o != null ? o + " - " + o.hashCode() : "null").collect(Collectors.toList()));
                 Assertions.fail(errMsg);
             }
+        }
+    }
+
+    public static void verifyGridEquals(Grid grid, String expectedGrid) throws IOException, CellOutOfBoundException {
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            ConsoleIO consoleIO = new ConsoleIO(grid, null, outputStream);
+            consoleIO.displayGameGrid();
+            Assertions.assertEquals(expectedGrid, outputStream.toString());
         }
     }
 }

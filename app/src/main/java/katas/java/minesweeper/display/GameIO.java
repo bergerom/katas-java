@@ -11,6 +11,8 @@ public interface GameIO {
 
     void displayGameGrid(Set<Cell> onlyDisplay) throws CellOutOfBoundException, IOException;
 
+    void displayGameGrid() throws CellOutOfBoundException, IOException;
+
     Position takeUserInput() throws IOException;
 
     void displayWinMessage() throws IOException;

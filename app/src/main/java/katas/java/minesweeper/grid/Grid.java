@@ -1,7 +1,6 @@
 package katas.java.minesweeper.grid;
 
 import katas.java.minesweeper.CellOutOfBoundException;
-import katas.java.minesweeper.IOGridDisplay;
 import katas.java.minesweeper.InvalidInputException;
 
 import java.util.*;
@@ -9,7 +8,7 @@ import java.util.stream.Stream;
 
 import static katas.java.minesweeper.grid.CellType.getAllowedCharactersForCell;
 
-public class Grid implements IOGridDisplay {
+public class Grid {
     protected InternalGrid cells; // TODO : make an internal grid class with getCellAt, getPositionFromCell
 
     private Grid(Builder builder) {
@@ -84,46 +83,6 @@ public class Grid implements IOGridDisplay {
 
     public Position getPositionFromIndex(int index) {
         return cells.getPositionFromIndex(index);
-    }
-
-    @Override
-    public String displayGameGrid() throws CellOutOfBoundException {
-        return displayGameGrid(cells.getAllCells());
-    }
-
-    @Override
-    public String displayGameGrid(List<Cell> onlyDisplay) throws CellOutOfBoundException {
-        StringBuilder result = new StringBuilder();
-        int rowLength = this.cells.getRowLength();
-        result.append(generateBlankLine(rowLength)).append("\n");
-
-        for (int row = 0; row < rowLength; row++) {
-            result.append("|");
-            for (int col = 0; col < rowLength; col++) {
-                int index = row * rowLength + col;
-                Cell cell = getCellAt(cells.getPositionFromIndex(index));
-                result.append(onlyDisplay.contains(cell) ? cell.toString() : "?");
-                if (col != rowLength - 1) {
-                    result.append(" ");
-                }
-            }
-            result.append("|\n");
-        }
-
-        return result
-                .append(generateBlankLine(this.cells.getRowLength()))
-                .toString();
-    }
-
-    private String generateBlankLine(int length) {
-        StringBuilder blankLine = new StringBuilder("|");
-        for (int i = 0; i < length; i++) {
-            blankLine.append("-");
-            if (i != length - 1)
-                blankLine.append(" ");
-        }
-        blankLine.append("|");
-        return blankLine.toString();
     }
 
     static class Builder {
