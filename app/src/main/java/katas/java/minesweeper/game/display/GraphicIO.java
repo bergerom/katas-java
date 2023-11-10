@@ -16,7 +16,6 @@ import java.util.Set;
 public class GraphicIO implements GameIO {
 
     private final Grid grid;
-    private Frame frame;
 
     private HashMap<Cell, Button> positionCells = new HashMap<>();
 
@@ -36,27 +35,54 @@ public class GraphicIO implements GameIO {
     }
 
     private void initGraphicGrid() throws CellOutOfBoundException {
-        int nbRows = grid.getRowLength();
-        int nbCells = grid.getNbCells();
+        Frame frame = new Frame();
+        frame.setLayout(new BorderLayout());
 
-        frame = new Frame();
-        frame.setTitle("Minesweeper");
-        frame.setSize(300, 300);
+        Panel topPanel = getTopPanel();
+        Panel middlePanel = getCenterPanel();
+        Panel bottomPanel = getBottomPanel();
 
-        frame.setLayout(new GridLayout(grid.getRowLength(), grid.getRowLength()));
-        for (int i = 0; i < nbCells; i++) {
-            Cell cell = grid.getCellFromIndex(i);
+        frame.add(topPanel, BorderLayout.NORTH);
+        frame.add(middlePanel, BorderLayout.CENTER);
+        frame.add(bottomPanel, BorderLayout.SOUTH);
+
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    private Panel getCenterPanel() {
+        Panel panel = new Panel();
+        //panel.setTitle("Minesweeper");
+        panel.setSize(300, 300);
+
+        panel.setLayout(new GridLayout(grid.getRowLength(), grid.getRowLength()));
+        for (Cell cell : grid.getCells()) {
 
             Button button = new Button();
             button.setLabel("?");
             button.setActionCommand(getPositionStr(cell.getPosition()));
             button.addActionListener(new ButtonClickListener());
 
-            frame.add(button);
+            panel.add(button);
             positionCells.put(cell, button);
         }
-        frame.pack();
-        frame.setVisible(true);
+        return panel;
+    }
+
+    private Panel getTopPanel() {
+        Panel panel = new Panel();
+        panel.setLayout(new FlowLayout());
+        panel.add(new TextField("Number of Bombs : 10"));
+        panel.add(new TextField("Score : 0"));
+        panel.add(new TextField("Round : 0"));
+        return panel;
+    }
+
+    private Panel getBottomPanel() {
+        Panel panel = new Panel();
+        panel.setLayout(new FlowLayout());
+        panel.add(new TextField("This is a commentary"));
+        return panel;
     }
 
     private void updateGraphicGrid(Set<Cell> onlyDisplay) {

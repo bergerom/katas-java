@@ -19,18 +19,21 @@ public class Minesweeper {
 
         Options options = new Options();
         options.addOption("g", "graphic", false, "Enable graphical interface");
+        options.addOption("d", "difficulty", false, "Difficulty level (from 1 to 3)");
         CommandLineParser parser = new DefaultParser();
         boolean isGraphic = false;
+        int difficulty = 1;
         try {
             CommandLine cmd = parser.parse(options, args);
             isGraphic = cmd.hasOption("graphic");
+            difficulty = Integer.parseInt(cmd.getOptionValue("difficulty", "1"));
 
         } catch (ParseException e) {
             System.err.println("Error: " + e.getMessage());
             System.exit(1);
         }
 
-        Grid grid = createRandomGrid();
+        Grid grid = createRandomGrid(difficulty);
         GameIO gameIO = getIOInterface(isGraphic, grid);
         Game game = new Game(grid, gameIO);
         game.gameLoop();

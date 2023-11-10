@@ -37,12 +37,12 @@ public class Grid {
                 .build();
     }
 
-    public static Grid createRandomGrid() throws InvalidInputException {
+    public static Grid createRandomGrid(int difficulty) throws InvalidInputException {
         Random random = new Random();
         int rowLength = random.nextInt(3, 10);
         int nbCells = rowLength * rowLength;
 
-        int nbBombs = random.nextInt(rowLength, rowLength + (int) Math.sqrt(rowLength));
+        int nbBombs = getNbBombs(rowLength, difficulty, random);
         Set<Position> bombs = new HashSet<>();
         while (bombs.size() < nbBombs) {
             int row = random.nextInt(rowLength);
@@ -51,6 +51,10 @@ public class Grid {
         }
 
         return createGrid(nbCells, bombs.stream().toList());
+    }
+
+    private static int getNbBombs(int rowLength, int difficulty, Random random) {
+        return random.nextInt(rowLength - 1, rowLength + (int) Math.sqrt(rowLength) * (difficulty - 1));
     }
 
     public List<Cell> getCells() {
@@ -83,7 +87,7 @@ public class Grid {
         return getCellAt(cells.getPositionFromIndex(index));
     }
 
-    static class Builder {
+    public static class Builder {
 
         private final Grid grid;
 
@@ -121,7 +125,7 @@ public class Grid {
             return this;
         }
 
-        Builder initFromAsciiGrid(String gridInput) throws InvalidInputException {
+        public Builder initFromAsciiGrid(String gridInput) throws InvalidInputException {
             verifyCharacters(gridInput);
 
             List<String> lines = Arrays
@@ -185,7 +189,7 @@ public class Grid {
         }
 
 
-        Builder initializeCellValues() {
+        public Builder initializeCellValues() {
             for (Cell cell : grid.cells.getBombCells()) {
                 for (Cell nextToBomb : grid.cells.getAdjacentCells(cell.getPosition())) {
                     nextToBomb.numberBombsAdj += 1;
@@ -194,7 +198,7 @@ public class Grid {
             return this;
         }
 
-        Grid build() {
+        public Grid build() {
             return new Grid(this);
         }
     }

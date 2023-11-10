@@ -19,3 +19,10 @@ Given two (singly) linked lists, determine if the two lists intersect. Return th
 intersecting node. Note that the intersection is defined based on reference, not value. That is, if the
 kth node of the first linked list is the exact same node (by reference) as the jth node of the second
 linked list, then they are intersecting
+
+### Stack and Queues
+## Recursive into iterative
+Use a stack to implement a recursive algorithm iteratively
+## Min value stack (TODO)
+How would you design a stack which, in addition to push and pop, has a function min
+which returns the minimum element? Push, pop and min should all operate in 0(1) time.
