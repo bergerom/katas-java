@@ -1,5 +1,9 @@
-package katas.java.linkedlist;
+package katas.java.linkedlist.intersection;
 
+import katas.java.linkedlist.intersection.LinkedListBuilder;
+import katas.java.linkedlist.intersection.ListIntersectionTraversal;
+import katas.java.linkedlist.intersection.ListIntersectionWithHashMap;
+import katas.java.linkedlist.intersection.Node;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

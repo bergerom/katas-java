@@ -1,4 +1,4 @@
-package katas.java.linkedlist;
+package katas.java.linkedlist.intersection;
 
 public class LinkedListBuilder {
 

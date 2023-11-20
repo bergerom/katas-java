@@ -1,4 +1,4 @@
-package katas.java.linkedlist;
+package katas.java.linkedlist.intersection;
 
 import java.util.HashSet;
 import java.util.Set;

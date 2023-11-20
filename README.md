@@ -16,11 +16,14 @@ The size of a directory is equal to the sum of all the files it contains plus th
 size of its subdirectories. (Hint: you might want to wrap java.io.File objects inside your Leaf and Composite classes. 
 
 ## -- Linked List --
+### intersection
 Given two (singly) linked lists, determine if the two lists intersect. Return the
 intersecting node. Note that the intersection is defined based on reference, not value. That is, if the
 kth node of the first linked list is the exact same node (by reference) as the jth node of the second
 linked list, then they are intersecting
-
+### partition (leetcode)
+Given the head of a linked list and a value x, partition it such that all nodes less than x come before nodes 
+greater than or equal to x.
 ## -- Matrixes --
 ### Matrix rotate
 Given an image represented by an NxN matrix, where each pixel in the image is 4
